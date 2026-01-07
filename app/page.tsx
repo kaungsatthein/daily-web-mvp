@@ -18,7 +18,7 @@ export default function HomePage() {
         </div>
 
         <Card className="p-10 bg-card/50 backdrop-blur-sm border-primary/20 shadow-xl">
-          <div className="space-y-6. flex flex-row justify-between">
+          <div className="space-y-6 flex flex-col md:flex-row justify-between">
             <div className="flex items-center justify-between flex-wrap gap-4">
               <div className="space-y-1">
                 <h2 className="text-2xl font-semibold text-foreground">
