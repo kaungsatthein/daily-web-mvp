@@ -43,7 +43,7 @@ export function PropertiesPanel({
   const [backgroundColor, setBackgroundColor] = useState("#ffffff");
   const [textColor, setTextColor] = useState("#000000");
   const [fontFamily, setFontFamily] = useState("inter");
-  const [fontSize, setFontSize] = useState(48);
+  const [fontSize, setFontSize] = useState(60);
   const [textAlign, setTextAlign] = useState<"left" | "center" | "right">(
     "left"
   );

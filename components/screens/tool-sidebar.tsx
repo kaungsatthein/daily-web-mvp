@@ -19,7 +19,7 @@ const tools: { id: ToolType; icon: React.ElementType; label: string }[] = [
 
 export function ToolSidebar({ selectedTool, onSelectTool }: ToolSidebarProps) {
   return (
-    <aside className="w-full lg:w-20 border-b lg:border-b-0 lg:border-r border-border bg-card flex flex-row lg:flex-col items-center justify-around lg:justify-start py-2 lg:py-4 gap-2 shrink-0">
+    <aside className="w-20 border-r border-border bg-card flex flex-col items-center py-4 gap-2">
       {tools.map((tool) => {
         const Icon = tool.icon;
         const isSelected = selectedTool === tool.id;
@@ -30,7 +30,7 @@ export function ToolSidebar({ selectedTool, onSelectTool }: ToolSidebarProps) {
             variant="ghost"
             size="icon"
             className={cn(
-              "flex-1 lg:flex-none w-full lg:w-auto h-12 lg:h-auto lg:size-14 flex-col gap-2 py-2 hover:bg-primary",
+              "size-14 flex-col gap-2 h-auto py-2 hover:bg-primary",
               isSelected && "bg-primary text-primary-foreground"
             )}
             onClick={() => onSelectTool(tool.id)}

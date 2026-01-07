@@ -113,31 +113,18 @@ const EditorScreen = () => {
         canUndo={canUndo}
         canRedo={canRedo}
       />
-      <div className="flex-1 flex flex-col lg:flex-row overflow-auto lg:overflow-hidden">
+      <div className="flex-1 flex overflow-hidden">
         <ToolSidebar
           selectedTool={selectedTool}
           onSelectTool={setSelectedTool}
         />
 
-        <div className="flex-1 flex flex-col overflow-hidden">
-          <div className="flex-1 min-h-[50vh]">
-            <Canvas
-              width={canvasSize.width}
-              height={canvasSize.height}
-              onCanvasReady={setCanvasInstance}
-            />
-          </div>
-          <div className="border-t border-border bg-card lg:hidden max-h-[55vh] overflow-y-auto">
-            {selectedTool === "ai-generate" ? (
-              <AIGeneratePanel />
-            ) : (
-              <PropertiesPanel
-                canvas={canvasInstance}
-                canvasSize={canvasSize}
-                onCanvasSizeChange={setCanvasSize}
-              />
-            )}
-          </div>
+        <div className="flex-1 flex flex-col overflow-hidden ">
+          <Canvas
+            width={canvasSize.width}
+            height={canvasSize.height}
+            onCanvasReady={setCanvasInstance}
+          />
         </div>
 
         <div className="w-80 border-l border-border bg-card overflow-y-auto hidden lg:block">

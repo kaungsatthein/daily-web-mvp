@@ -76,7 +76,7 @@ export function Canvas({ width, height, onCanvasReady }: CanvasProps) {
   }, [height, scale, width]);
 
   return (
-    <div className="flex-1 p-3 sm:p-6 overflow-auto checkerboard">
+    <div className="flex-1 p-6 overflow-auto checkerboard">
       <div
         ref={stageRef}
         className="min-h-full flex items-center justify-center"
