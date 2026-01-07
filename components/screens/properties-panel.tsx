@@ -8,11 +8,31 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Slider } from "@/components/ui/slider";
 import { Button } from "@/components/ui/button";
 import { AlignLeft, AlignCenter, AlignRight } from "lucide-react";
+import { useRef, useState } from "react";
+import Image from "next/image";
 
 export function PropertiesPanel() {
+  const [imagePreviewUrl, setImagePreviewUrl] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
+
+  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) {
+      setImagePreviewUrl(null);
+      return;
+    }
+
+    const nextUrl = URL.createObjectURL(file);
+    setImagePreviewUrl((currentUrl) => {
+      if (currentUrl) {
+        URL.revokeObjectURL(currentUrl);
+      }
+      return nextUrl;
+    });
+  };
+
   return (
     <div className="p-4 space-y-4">
       <h2 className="text-sm font-semibold text-foreground">Properties</h2>
@@ -83,12 +103,6 @@ export function PropertiesPanel() {
           </div>
 
           <div className="space-y-2">
-            <Label className="text-xs">Font Size</Label>
-            <Slider defaultValue={[24]} max={100} min={8} step={1} />
-            <span className="text-xs text-muted-foreground">24px</span>
-          </div>
-
-          <div className="space-y-2">
             <Label className="text-xs">Text Color</Label>
             <Input type="color" defaultValue="#000000" className="h-12 w-30" />
           </div>
@@ -122,34 +136,41 @@ export function PropertiesPanel() {
         </TabsContent>
 
         <TabsContent value="image" className="space-y-4 pt-4">
-          <div className="grid grid-cols-2 gap-2">
+          <div className="space-y-2">
+            <Label className="text-xs">Upload Image</Label>
+            <Input
+              ref={fileInputRef}
+              type="file"
+              accept="image/*"
+              onChange={handleImageChange}
+              className="hidden"
+            />
+            <Button
+              type="button"
+              variant="outline"
+              className="w-full"
+              onClick={() => fileInputRef.current?.click()}
+            >
+              Upload Image
+            </Button>
+          </div>
+
+          {imagePreviewUrl ? (
             <div className="space-y-2">
-              <Label className="text-xs">Position X</Label>
-              <Input type="number" defaultValue="0" className="h-9" />
+              <Label className="text-xs">Preview</Label>
+              <div className="overflow-hidden rounded-md border border-border bg-muted">
+                <div className="relative w-full">
+                  <Image
+                    src={imagePreviewUrl}
+                    alt="Uploaded preview"
+                    width={640}
+                    height={360}
+                    className="h-auto w-full"
+                  />
+                </div>
+              </div>
             </div>
-            <div className="space-y-2">
-              <Label className="text-xs">Position Y</Label>
-              <Input type="number" defaultValue="0" className="h-9" />
-            </div>
-          </div>
-
-          <div className="space-y-2">
-            <Label className="text-xs">Scale</Label>
-            <Slider defaultValue={[100]} max={200} min={10} step={1} />
-            <span className="text-xs text-muted-foreground">100%</span>
-          </div>
-
-          <div className="space-y-2">
-            <Label className="text-xs">Rotation</Label>
-            <Slider defaultValue={[0]} max={360} min={0} step={1} />
-            <span className="text-xs text-muted-foreground">0°</span>
-          </div>
-
-          <div className="space-y-2">
-            <Label className="text-xs">Opacity</Label>
-            <Slider defaultValue={[100]} max={100} min={0} step={1} />
-            <span className="text-xs text-muted-foreground">100%</span>
-          </div>
+          ) : null}
         </TabsContent>
       </Tabs>
     </div>
